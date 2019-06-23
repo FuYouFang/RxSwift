@@ -36,12 +36,17 @@ public enum ReachabilityError: Error {
     case unableToSetDispatchQueue
 }
 
+
+/// 静态的、全局的 首字符大写
+/// 通知全局可以用一个实例
 public let ReachabilityChangedNotification = Notification.Name("ReachabilityChangedNotification")
 
-func callback(reachability:SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) {
+// TODO: - SCNetworkReachability, SCNetworkReachabilityFlags 的用法
+func callback(reachability: SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) {
 
     guard let info = info else { return }
     
+    // TODO:
     let reachability = Unmanaged<Reachability>.fromOpaque(info).takeUnretainedValue()
 
     DispatchQueue.main.async { 

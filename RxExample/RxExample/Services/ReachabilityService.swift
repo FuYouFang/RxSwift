@@ -10,6 +10,7 @@ import RxSwift
 
 import class Dispatch.DispatchQueue
 
+// 网络可达状态
 public enum ReachabilityStatus {
     case reachable(viaWiFi: Bool)
     case unreachable
@@ -34,8 +35,8 @@ enum ReachabilityServiceError: Error {
     case failedToCreate
 }
 
-class DefaultReachabilityService
-    : ReachabilityService {
+
+class DefaultReachabilityService: ReachabilityService {
 
     private let _reachabilitySubject: BehaviorSubject<ReachabilityStatus>
 
