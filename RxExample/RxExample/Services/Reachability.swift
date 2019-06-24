@@ -46,7 +46,6 @@ func callback(reachability: SCNetworkReachability, flags: SCNetworkReachabilityF
 
     guard let info = info else { return }
     
-    // TODO:
     let reachability = Unmanaged<Reachability>.fromOpaque(info).takeUnretainedValue()
 
     DispatchQueue.main.async { 
@@ -125,8 +124,14 @@ public class Reachability {
     
     public convenience init?() {
         
+        // 网络地址
         var zeroAddress = sockaddr()
+        // 总长度
         zeroAddress.sa_len = UInt8(MemoryLayout<sockaddr>.size)
+        // 地址族
+        // AF_INET（又称 PF_INET）是 IPv4 网络协议的套接字类型，AF_INET6 则是 IPv6 的；而 AF_UNIX 则是 Unix 系统本地通信。
+        // 选择 AF_INET 的目的就是使用 IPv4 进行通信。因为 IPv4 使用 32 位地址，相比 IPv6 的 128 位来说，计算更快，便于用于局域网通信。
+        // 而且 AF_INET 相比 AF_UNIX 更具通用性，因为 Windows 上有 AF_INET 而没有 AF_UNIX。
         zeroAddress.sa_family = sa_family_t(AF_INET)
         
         guard let ref: SCNetworkReachability = withUnsafePointer(to: &zeroAddress, {
@@ -152,8 +157,10 @@ public extension Reachability {
         
         guard let reachabilityRef = reachabilityRef, !notifierRunning else { return }
         
+        // TODO: SCNetworkReachabilityContext 的用法
         var context = SCNetworkReachabilityContext(version: 0, info: nil, retain: nil, release: nil, copyDescription: nil)
-        context.info = UnsafeMutableRawPointer(Unmanaged<Reachability>.passUnretained(self).toOpaque())        
+        context.info = UnsafeMutableRawPointer(Unmanaged<Reachability>.passUnretained(self).toOpaque())
+        // TODO: SCNetworkReachabilitySetCallback 的用法
         if !SCNetworkReachabilitySetCallback(reachabilityRef, callback, &context) {
             stopNotifier()
             throw ReachabilityError.unableToSetCallback
@@ -176,6 +183,7 @@ public extension Reachability {
         defer { notifierRunning = false }
         guard let reachabilityRef = reachabilityRef else { return }
         
+        // TODO:
         SCNetworkReachabilitySetCallback(reachabilityRef, nil, nil)
         SCNetworkReachabilitySetDispatchQueue(reachabilityRef, nil)
     }
