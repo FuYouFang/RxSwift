@@ -61,6 +61,7 @@ final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observ
     }
 }
 
+// anonymous 匿名
 final private class AnonymousObservable<Element>: Producer<Element> {
     typealias SubscribeHandler = (AnyObserver<Element>) -> Disposable
 

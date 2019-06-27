@@ -32,6 +32,7 @@
     }
 #endif
 
+/// swift 没有实现抽象方法。
 /// Swift does not implement abstract methods. This method is used as a runtime check to ensure that methods which intended to be abstract (i.e., they should be implemented in subclasses) are not called directly on the superclass.
 func rxAbstractMethod(file: StaticString = #file, line: UInt = #line) -> Swift.Never {
     rxFatalError("Abstract method", file: file, line: line)

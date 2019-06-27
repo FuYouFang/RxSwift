@@ -41,11 +41,10 @@ public enum ReachabilityError: Error {
 /// 通知全局可以用一个实例
 public let ReachabilityChangedNotification = Notification.Name("ReachabilityChangedNotification")
 
-// TODO: - SCNetworkReachability, SCNetworkReachabilityFlags 的用法
 func callback(reachability: SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) {
 
     guard let info = info else { return }
-    
+    // TODO: 此处为什么没有直接保存 flags？而是在调用的 SCNetworkReachabilityGetFlags 进行的保存
     let reachability = Unmanaged<Reachability>.fromOpaque(info).takeUnretainedValue()
 
     DispatchQueue.main.async { 
@@ -294,6 +293,9 @@ fileprivate extension Reachability {
         return reachabilityFlags.intersection([.connectionRequired, .transientConnection]) == [.connectionRequired, .transientConnection]
     }
     
+    // TODO: public struct SCNetworkReachabilityFlags : OptionSet
+    // optionSet 的用法
+    //
     var reachabilityFlags: SCNetworkReachabilityFlags {
         
         guard let reachabilityRef = reachabilityRef else { return SCNetworkReachabilityFlags() }
