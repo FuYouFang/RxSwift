@@ -46,6 +46,7 @@ extension Event {
 
     /// If `next` event, returns element value.
     public var element: Element? {
+        // 简便写法
         if case .next(let value) = self {
             return value
         }

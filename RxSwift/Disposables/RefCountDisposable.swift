@@ -29,7 +29,7 @@ public final class RefCountDisposable : DisposeBase, Cancelable {
      Holds a dependent disposable that when disposed decreases the refcount on the underlying disposable.
 
      When getter is called, a dependent disposable contributing to the reference count that manages the underlying disposable's lifetime is returned.
-     */
+     */  
     public func retain() -> Disposable {
         return self._lock.calculateLocked {
             if self._disposable != nil {

@@ -1569,19 +1569,19 @@
 		C8093C471B8A72BE0088E94D /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
+				C8093C641B8A72BE0088E94D /* Event.swift */,
+				C8093CAB1B8A72BE0088E94D /* ObserverType.swift */,
+				C8093C9E1B8A72BE0088E94D /* ObservableType.swift */,
 				C85217E81E3374970015DD38 /* GroupedObservable.swift */,
+				C8093C521B8A72BE0088E94D /* Disposable.swift */,
 				C8093C491B8A72BE0088E94D /* Cancelable.swift */,
 				C8093C4D1B8A72BE0088E94D /* ConnectableObservableType.swift */,
-				C8093C521B8A72BE0088E94D /* Disposable.swift */,
 				C8093C631B8A72BE0088E94D /* Errors.swift */,
-				C8093C641B8A72BE0088E94D /* Event.swift */,
 				C8093C651B8A72BE0088E94D /* ImmediateSchedulerType.swift */,
 				C8093C681B8A72BE0088E94D /* Observable.swift */,
 				C8093C671B8A72BE0088E94D /* ObservableType+Extensions.swift */,
 				C849BE2A1BAB5D070019AD27 /* ObservableConvertibleType.swift */,
-				C8093C9E1B8A72BE0088E94D /* ObservableType.swift */,
 				C8093CA01B8A72BE0088E94D /* AnyObserver.swift */,
-				C8093CAB1B8A72BE0088E94D /* ObserverType.swift */,
 				C8550B4A1D95A41400A6FCFE /* Reactive.swift */,
 				C8093CAF1B8A72BE0088E94D /* Rx.swift */,
 				C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */,
