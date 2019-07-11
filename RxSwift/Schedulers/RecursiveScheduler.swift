@@ -61,6 +61,7 @@ final class AnyRecursiveScheduler<State> {
             }
             
             if let action = action {
+                // 现在才开始调用真正的方法
                 action(state, self)
             }
             
@@ -164,14 +165,18 @@ final class RecursiveImmediateScheduler<State> {
     ///
     /// - parameter state: State passed to the action to be executed.
     func schedule(_ state: State) {
+        // 本次的调度状态
+        // 因为调度是异步的，所以不确定是什么时候执行，
         var scheduleState: ScheduleState = .initial
 
+        // 如果已经执行了，则变量 d 不需要处理
+        // 如果还没有执行，则先将变量 d 添加到 _group 中，等执行结束后，将 d 从 _group 中移除
         let d = self._scheduler.schedule(state) { state -> Disposable in
             // best effort
             if self._group.isDisposed {
                 return Disposables.create()
             }
-            
+
             let action = self._lock.calculateLocked { () -> Action? in
                 switch scheduleState {
                 case let .added(removeKey):
@@ -188,6 +193,9 @@ final class RecursiveImmediateScheduler<State> {
             }
             
             if let action = action {
+                // action 为调度操作
+                // self.schedule 为 self 的方法
+                // 现在才是调用真正的方法
                 action(state, self.schedule)
             }
             

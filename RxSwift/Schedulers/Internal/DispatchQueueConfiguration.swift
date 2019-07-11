@@ -15,6 +15,7 @@ struct DispatchQueueConfiguration {
 }
 
 extension DispatchQueueConfiguration {
+    // 通过将异步的 action 返回的 disposable 分装，可以立马返回一个 disposabel
     func schedule<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
         let cancel = SingleAssignmentDisposable()
 

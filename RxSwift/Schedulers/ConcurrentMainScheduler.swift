@@ -15,6 +15,8 @@ Abstracts work that needs to be performed on `MainThread`. In case `schedule` me
 
 This scheduler is optimized for `subscribeOn` operator. If you want to observe observable sequence elements on main thread using `observeOn` operator,
 `MainScheduler` is more suitable for that purpose.
+ 
+ 调度器对 subscribeOn 操作进行了优化。如果想要在 主线程 上用 observeOn 方法对可观察的队列进行观察，MainScheduler 将更适合这个目的
 */
 public final class ConcurrentMainScheduler : SchedulerType {
     public typealias TimeInterval = Foundation.TimeInterval

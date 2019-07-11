@@ -14,6 +14,8 @@ import Dispatch
 /// Abstracts the work that needs to be performed on a specific `NSOperationQueue`.
 ///
 /// This scheduler is suitable for cases when there is some bigger chunk of work that needs to be performed in background and you want to fine tune concurrent processing using `maxConcurrentOperationCount`.
+/// fine tune 微调
+/// 适合在 background 执行的大量工作，可以通过 maxConcurrentOperationCount 进行微调
 public class OperationQueueScheduler: ImmediateSchedulerType {
     public let operationQueue: OperationQueue
     public let queuePriority: Operation.QueuePriority
@@ -21,7 +23,7 @@ public class OperationQueueScheduler: ImmediateSchedulerType {
     /// Constructs new instance of `OperationQueueScheduler` that performs work on `operationQueue`.
     ///
     /// - parameter operationQueue: Operation queue targeted to perform work on.
-    /// - parameter queuePriority: Queue priority which will be assigned to new operations.
+    /// - parameter queuePriority: Queue priority which will be assigned to new operations. 指定新操作的优先级
     public init(operationQueue: OperationQueue, queuePriority: Operation.QueuePriority = .normal) {
         self.operationQueue = operationQueue
         self.queuePriority = queuePriority
@@ -41,8 +43,6 @@ public class OperationQueueScheduler: ImmediateSchedulerType {
             if cancel.isDisposed {
                 return
             }
-
-
             cancel.setDisposable(action(state))
         }
 

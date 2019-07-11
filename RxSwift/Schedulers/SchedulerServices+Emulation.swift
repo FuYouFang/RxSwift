@@ -11,6 +11,7 @@ enum SchedulePeriodicRecursiveCommand {
     case dispatchStart
 }
 
+// 间隔一定时间的循环调度
 final class SchedulePeriodicRecursive<State> {
     typealias RecursiveAction = (State) -> State
     typealias RecursiveScheduler = AnyRecursiveScheduler<SchedulePeriodicRecursiveCommand>
@@ -35,6 +36,10 @@ final class SchedulePeriodicRecursive<State> {
         return self._scheduler.scheduleRecursive(SchedulePeriodicRecursiveCommand.tick, dueTime: self._startAfter, action: self.tick)
     }
 
+    // 第一次 _startAfter .tick
+    // 然后每经过 _period 调用 .tick， 将工作加一，并开始 start
+    // start 的时候，执行任务，将工作数减一，
+    
     func tick(_ command: SchedulePeriodicRecursiveCommand, scheduler: RecursiveScheduler) {
         // Tries to emulate periodic scheduling as best as possible.
         // The problem that could arise is if handling periodic ticks take too long, or

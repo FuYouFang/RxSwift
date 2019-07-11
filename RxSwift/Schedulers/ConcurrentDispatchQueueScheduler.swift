@@ -14,6 +14,8 @@ import Dispatch
 ///
 /// This scheduler is suitable when some work needs to be performed in background.
 public class ConcurrentDispatchQueueScheduler: SchedulerType {
+    // DispatchTimeInterval 为一个结构体
+    // Foundation.TimeInterval 为 Double
     public typealias TimeInterval = Foundation.TimeInterval
     public typealias Time = Date
     

@@ -21,11 +21,16 @@ Because there is no way of detecting is passed dispatch queue serial or
 concurrent, for every queue that is being passed, worst case (concurrent)
 will be assumed, and internal serial proxy dispatch queue will be created.
 
+ 因为没有办法来分辨出一个线程是串行的，还是并行的，
+ 处于最坏的打算，将会在内部创建一个串行的代理线程
+ 
 This scheduler can also be used with internal serial queue alone.
 
 In case some customization need to be made on it before usage,
 internal serial queue can be customized using `serialQueueConfiguration`
 callback.
+ 
+ 如果在使用之前，需要进行一些自定义的操作，则可以使用 serialQueueConfiguration 的回调
 */
 public class SerialDispatchQueueScheduler : SchedulerType {
     public typealias TimeInterval = Foundation.TimeInterval

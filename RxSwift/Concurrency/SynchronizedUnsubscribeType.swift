@@ -9,5 +9,6 @@
 protocol SynchronizedUnsubscribeType : class {
     associatedtype DisposeKey
 
+    // 同步取消订阅
     func synchronizedUnsubscribe(_ disposeKey: DisposeKey)
 }

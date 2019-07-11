@@ -16,10 +16,7 @@ and pending work.
 
 That means that enqueued work could possibly be executed later on a different thread.
 */
-final class AsyncLock<I: InvocableType>
-    : Disposable
-    , Lock
-    , SynchronizedDisposeType {
+final class AsyncLock<I: InvocableType> : Disposable, Lock, SynchronizedDisposeType {
     typealias Action = () -> Void
     
     var _lock = SpinLock()
@@ -60,32 +57,29 @@ final class AsyncLock<I: InvocableType>
         self._lock.lock(); defer { self._lock.unlock() } // {
             if !self._queue.isEmpty {
                 return self._queue.dequeue()
-            }
-            else {
+            } else {
                 self._isExecuting = false
                 return nil
             }
         // }
     }
 
+    // enqueue 和 dequeue 都是 private
+    // 这个锁被持有的时候，加入队列
+    // 没有别持有的时候，执行队列中的所有方法
+    // 加入队列中的方法，可能在其他线程上执行
     func invoke(_ action: I) {
-        let firstEnqueuedAction = self.enqueue(action)
-        
-        if let firstEnqueuedAction = firstEnqueuedAction {
+        if let firstEnqueuedAction = self.enqueue(action) {
             firstEnqueuedAction.invoke()
-        }
-        else {
+        } else {
             // action is enqueued, it's somebody else's concern now
             return
         }
         
         while true {
-            let nextAction = self.dequeue()
-
-            if let nextAction = nextAction {
+            if let nextAction = self.dequeue() {
                 nextAction.invoke()
-            }
-            else {
+            } else {
                 return
             }
         }

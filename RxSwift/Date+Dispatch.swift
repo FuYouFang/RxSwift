@@ -53,11 +53,15 @@ extension DispatchTimeInterval {
 
 extension Date {
 
+    // 在一个时间的基础上再加上一个时间段
+    // 注意 DispatchTimeInterval 有 never 的情况
     internal func addingDispatchInterval(_ dispatchInterval: DispatchTimeInterval) -> Date {
         switch dispatchInterval {
         case .nanoseconds(let value), .microseconds(let value), .milliseconds(let value), .seconds(let value):
+            //
             return self.addingTimeInterval(TimeInterval(value) / dispatchInterval.convertToSecondsFactor)
-        case .never: return Date.distantFuture
+        case .never:
+            return Date.distantFuture
         @unknown default: fatalError()
         }
     }

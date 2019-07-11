@@ -16,6 +16,8 @@ extension ObservableType {
      
      - parameter on: Action to invoke for each event in the observable sequence.
      - returns: Subscription object used to unsubscribe from the observable sequence.
+     
+     将代码块转化成类，然后对时间进行订阅
      */
     public func subscribe(_ on: @escaping (Event<Element>) -> Void)
         -> Disposable {
@@ -36,7 +38,10 @@ extension ObservableType {
      gracefully completed, errored, or if the generation is canceled by disposing subscription).
      - returns: Subscription object used to unsubscribe from the observable sequence.
      */
-    public func subscribe(onNext: ((Element) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
+    public func subscribe(onNext: ((Element) -> Void)? = nil,
+                          onError: ((Swift.Error) -> Void)? = nil,
+                          onCompleted: (() -> Void)? = nil,
+                          onDisposed: (() -> Void)? = nil)
         -> Disposable {
             let disposable: Disposable
             
@@ -51,6 +56,10 @@ extension ObservableType {
                 let synchronizationTracker = SynchronizationTracker()
             #endif
             
+            // 给 callStack 赋值的是两种类型，一种是  () -> [String], 一种是 []
+            // 结果相同时，可以相互转化
+            // Hooks.customCaptureSubscriptionCallstack()
+            // []
             let callStack = Hooks.recordCallStackOnError ? Hooks.customCaptureSubscriptionCallstack() : []
             
             let observer = AnonymousObserver<Element> { event in
@@ -76,26 +85,31 @@ extension ObservableType {
                     disposable.dispose()
                 }
             }
-            return Disposables.create(
-                self.asObservable().subscribe(observer),
-                disposable
-            )
+            // 返回的 disposable
+            // 1. 取消订阅的 disposable
+            // 2. 外界传过来的在取消订阅时需要调用的 onDisposed
+            // 在取消订阅时，需要同时调用这两个的 dispose 方法
+            return Disposables.create(self.asObservable().subscribe(observer), disposable)
     }
 }
 
 import class Foundation.NSRecursiveLock
+
 
 extension Hooks {
     public typealias DefaultErrorHandler = (_ subscriptionCallStack: [String], _ error: Error) -> Void
     public typealias CustomCaptureSubscriptionCallstack = () -> [String]
 
     fileprivate static let _lock = RecursiveLock()
+    // 调用错误堆栈的处理方式
     fileprivate static var _defaultErrorHandler: DefaultErrorHandler = { subscriptionCallStack, error in
         #if DEBUG
             let serializedCallStack = subscriptionCallStack.joined(separator: "\n")
             print("Unhandled error happened: \(error)\n subscription called from:\n\(serializedCallStack)")
         #endif
     }
+    
+    // 自定义获取调用堆栈信息
     fileprivate static var _customCaptureSubscriptionCallstack: CustomCaptureSubscriptionCallstack = {
         #if DEBUG
             return Thread.callStackSymbols

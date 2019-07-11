@@ -102,15 +102,17 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
      - parameter time: Absolute time when to execute the action.
      - parameter action: Action to be executed.
      - returns: The disposable object used to cancel the scheduled action (best effort).
+        这只是将 action 添加进了队列
      */
     public func scheduleAbsoluteVirtual<StateType>(_ state: StateType, time: Converter.VirtualTimeUnit, action: @escaping (StateType) -> Disposable) -> Disposable {
+        // TODO: 这里检查这干啥？
         MainScheduler.ensureExecutingOnScheduler()
 
         let compositeDisposable = CompositeDisposable()
 
+        // 将需要执行的 action， time， id 进行的封装
         let item = VirtualSchedulerItem(action: {
-            let dispose = action(state)
-            return dispose
+            return action(state)
         }, time: time, id: self._nextId)
 
         self._nextId += 1
@@ -128,6 +130,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     }
 
     /// Starts the virtual time scheduler.
+    /// 开始执行调度器中的所有任务，不检查时间，只记录最大时间
     public func start() {
         MainScheduler.ensureExecutingOnScheduler()
 
@@ -141,6 +144,8 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
                 break
             }
 
+            // 任务的时间大于 clock
+            // 记录任务最大的执行时间
             if self._converter.compareVirtualTime(next.time, self.clock).greaterThan {
                 self._clock = next.time
             }
@@ -152,6 +157,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
         self._running = false
     }
 
+    // 每个函数的行数都很短
     func findNext() -> VirtualSchedulerItem<VirtualTime>? {
         while let front = self._schedulerQueue.peek() {
             if front.isDisposed {
@@ -198,6 +204,7 @@ open class VirtualTimeScheduler<Converter: VirtualTimeConverterType>
     }
 
     /// Advances the scheduler's clock by the specified relative time.
+    /// 将时间设置到一个相对的时间
     public func sleep(_ virtualInterval: VirtualTimeInterval) {
         MainScheduler.ensureExecutingOnScheduler()
 
@@ -232,8 +239,7 @@ extension VirtualTimeScheduler: CustomDebugStringConvertible {
     }
 }
 
-final class VirtualSchedulerItem<Time>
-    : Disposable {
+final class VirtualSchedulerItem<Time>: Disposable {
     typealias Action = () -> Disposable
     
     let action: Action

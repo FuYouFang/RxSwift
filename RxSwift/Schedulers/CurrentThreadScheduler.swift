@@ -42,12 +42,15 @@ import Dispatch
 /// This is the default scheduler for operators that generate elements.
 ///
 /// This scheduler is also sometimes called `trampoline scheduler`.
+/// 在当前线程上调度一些任务
+/// 这个调度器有事会调用  `trampoline scheduler`.
 public class CurrentThreadScheduler : ImmediateSchedulerType {
     typealias ScheduleQueue = RxMutableBox<Queue<ScheduledItemType>>
 
     /// The singleton instance of the current thread scheduler.
     public static let instance = CurrentThreadScheduler()
 
+    // 线程特有数据
     private static var isScheduleRequiredKey: pthread_key_t = { () -> pthread_key_t in
         let key = UnsafeMutablePointer<pthread_key_t>.allocate(capacity: 1)
         defer { key.deallocate() }
@@ -73,6 +76,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     }
 
     /// Gets a value that indicates whether the caller must call a `schedule` method.
+    // fileprivate(set) 设置 get set 不同访问权限的方法
     public static fileprivate(set) var isScheduleRequired: Bool {
         get {
             return pthread_getspecific(CurrentThreadScheduler.isScheduleRequiredKey) == nil
@@ -105,10 +109,12 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
                 CurrentThreadScheduler.queue = nil
             }
 
+            // 获取当前队列关联的队列
             guard let queue = CurrentThreadScheduler.queue else {
                 return disposable
             }
 
+            //
             while let latest = queue.value.dequeue() {
                 if latest.isDisposed {
                     continue

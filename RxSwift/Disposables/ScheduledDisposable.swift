@@ -12,6 +12,8 @@ private let disposeScheduledDisposable: (ScheduledDisposable) -> Disposable = { 
 }
 
 /// Represents a disposable resource whose disposal invocation will be scheduled on the specified scheduler.
+/// 需需要在指定的调度器上调度的释放方法的类
+/// 将指定的调度器，需要释放的资源进行封装
 public final class ScheduledDisposable : Cancelable {
     public let scheduler: ImmediateSchedulerType
 
@@ -38,6 +40,7 @@ public final class ScheduledDisposable : Cancelable {
 
     /// Disposes the wrapped disposable on the provided scheduler.
     public func dispose() {
+        // state 为 self
         _ = self.scheduler.schedule(self, action: disposeScheduledDisposable)
     }
 

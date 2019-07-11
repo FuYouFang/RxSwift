@@ -40,6 +40,7 @@ public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
 
         let previousState = fetchOr(self._state, DisposeState.disposableSet.rawValue)
 
+        // 一样时满足条件
         if (previousState & DisposeState.disposableSet.rawValue) != 0 {
             rxFatalError("oldState.disposable != nil")
         }
@@ -59,6 +60,7 @@ public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
         }
 
         if (previousState & DisposeState.disposableSet.rawValue) != 0 {
+            // 如果有设置标记，但是值为空，则会抛出异常
             guard let disposable = self._disposable else {
                 rxFatalError("Disposable not set")
             }

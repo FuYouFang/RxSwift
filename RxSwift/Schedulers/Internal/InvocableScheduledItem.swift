@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+// 封装
 struct InvocableScheduledItem<I: InvocableWithValueType> : InvocableType {
 
     let _invocable: I

@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+// 可以调用的
 protocol InvocableType {
     func invoke()
 }

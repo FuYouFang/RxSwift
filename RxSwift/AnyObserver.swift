@@ -63,6 +63,14 @@ extension ObserverType {
     /// - returns: observer that transforms events.
     public func mapObserver<Result>(_ transform: @escaping (Result) throws -> Element) -> AnyObserver<Result> {
         return AnyObserver { e in
+            // transform 的类型 (Result) throws -> Element
+            // map 参数类型 (Element) throws -> Result
+            // 因为当前初始化的 AnyObserver 为返回值，所以 AnyObserver 的实际类型为 AnyObserver<Result>，
+            // 这就限制了 AnyObserver 中 event 的 Element 的类型为 Result，
+            // 所以 map 的实际类型就有：
+            // (Element) throws -> Result
+            // 变成了
+            // (Result) throws -> Result
             self.on(e.map(transform))
         }
     }

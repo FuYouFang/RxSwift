@@ -62,12 +62,15 @@ func decrementChecked(_ i: inout Int) throws -> Int {
     if i == Int.min {
         throw RxError.overflow
     }
+    // 这样写可以少写一个变量
     defer { i -= 1 }
     return i
 }
 
 #if DEBUG
     import class Foundation.Thread
+
+// TODO: 待看
     final class SynchronizationTracker {
         private let _lock = RecursiveLock()
 

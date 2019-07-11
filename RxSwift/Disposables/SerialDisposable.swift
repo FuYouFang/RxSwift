@@ -7,6 +7,7 @@
 //
 
 /// Represents a disposable resource whose underlying disposable resource can be replaced by another disposable resource, causing automatic disposal of the previous underlying disposable resource.
+///
 public final class SerialDisposable : DisposeBase, Cancelable {
     private var _lock = SpinLock()
     
@@ -37,12 +38,16 @@ public final class SerialDisposable : DisposeBase, Cancelable {
                 return self._current ?? Disposables.create()
             }
         }
+        // 不仅可以使用 newValue
+        // 也可以指定新值得名称，此处使用了 new + 属性名
         set (newDisposable) {
+            
+            // 如果已经调用了释放方法，再设置新值的时候，就直接释放掉
+            // 如果之前没有调用
             let disposable: Disposable? = self._lock.calculateLocked {
                 if self._isDisposed {
                     return newDisposable
-                }
-                else {
+                } else {
                     let toDispose = self._current
                     self._current = newDisposable
                     return toDispose
@@ -56,6 +61,7 @@ public final class SerialDisposable : DisposeBase, Cancelable {
     }
     
     /// Disposes the underlying disposable as well as all future replacements.
+    // 将多个条件判断的，分成两个函数，将功能进行拆分
     public func dispose() {
         self._dispose()?.dispose()
     }
@@ -64,8 +70,7 @@ public final class SerialDisposable : DisposeBase, Cancelable {
         self._lock.lock(); defer { self._lock.unlock() }
         if self._isDisposed {
             return nil
-        }
-        else {
+        } else {
             self._isDisposed = true
             let current = self._current
             self._current = nil

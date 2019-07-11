@@ -6,9 +6,9 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-struct ScheduledItem<T>
-    : ScheduledItemType
-    , InvocableType {
+// 将需要被调度的方法和参数进行封装
+// 通过调用 invoke 开始执行
+struct ScheduledItem<T>: ScheduledItemType, InvocableType {
     typealias Action = (T) -> Disposable
     
     private let _action: Action

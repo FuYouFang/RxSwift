@@ -20,6 +20,11 @@ Main scheduler is a specialization of `SerialDispatchQueueScheduler`.
 
 This scheduler is optimized for `observeOn` operator. To ensure observable sequence is subscribed on main thread using `subscribeOn`
 operator please use `ConcurrentMainScheduler` because it is more optimized for that purpose.
+ 
+ MainScheduler 这个调度器对 observeOn 进行了优化，
+ 为了确保 subscribeOn 是在主线程上对可观察的队列进行订阅了，请使用 ConcurrentMainScheduler，因为它对这种情况进行了优化
+ 
+ ConcurrentMainScheduler 对 subscribeOn 进行了优化
 */
 public final class MainScheduler : SerialDispatchQueueScheduler {
 
@@ -56,6 +61,9 @@ public final class MainScheduler : SerialDispatchQueueScheduler {
         #endif
     }
 
+    // 子类：主队列 并且 入栈的只有一个，则执行，否则异步派发
+    // 父类：全部异步派发，
+    // 子类的可以更快的执行调度的任务
     override func scheduleInternal<StateType>(_ state: StateType, action: @escaping (StateType) -> Disposable) -> Disposable {
         let previousNumberEnqueued = increment(self.numberEnqueued)
 

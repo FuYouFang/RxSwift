@@ -1253,7 +1253,7 @@
 		C84CC5661BDD08A500E06A64 /* SubscriptionDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionDisposable.swift; sourceTree = "<group>"; };
 		C85106871C2D550E0075150C /* String+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Rx.swift"; sourceTree = "<group>"; };
 		C85217E81E3374970015DD38 /* GroupedObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupedObservable.swift; sourceTree = "<group>"; };
-		C85217F41E33F9D70015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecursiveLock.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C85217F41E33F9D70015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecursiveLock.swift; sourceTree = "<group>"; };
 		C85217F61E33FBBE0015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecursiveLock.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C85217FB1E33FBFB0015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecursiveLock.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C85218001E33FC160015DD38 /* RecursiveLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecursiveLock.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -1571,17 +1571,17 @@
 			children = (
 				C8093C641B8A72BE0088E94D /* Event.swift */,
 				C8093CAB1B8A72BE0088E94D /* ObserverType.swift */,
+				C8093CA01B8A72BE0088E94D /* AnyObserver.swift */,
+				C849BE2A1BAB5D070019AD27 /* ObservableConvertibleType.swift */,
 				C8093C9E1B8A72BE0088E94D /* ObservableType.swift */,
+				C8093C671B8A72BE0088E94D /* ObservableType+Extensions.swift */,
+				C8093C681B8A72BE0088E94D /* Observable.swift */,
 				C85217E81E3374970015DD38 /* GroupedObservable.swift */,
 				C8093C521B8A72BE0088E94D /* Disposable.swift */,
 				C8093C491B8A72BE0088E94D /* Cancelable.swift */,
 				C8093C4D1B8A72BE0088E94D /* ConnectableObservableType.swift */,
 				C8093C631B8A72BE0088E94D /* Errors.swift */,
 				C8093C651B8A72BE0088E94D /* ImmediateSchedulerType.swift */,
-				C8093C681B8A72BE0088E94D /* Observable.swift */,
-				C8093C671B8A72BE0088E94D /* ObservableType+Extensions.swift */,
-				C849BE2A1BAB5D070019AD27 /* ObservableConvertibleType.swift */,
-				C8093CA01B8A72BE0088E94D /* AnyObserver.swift */,
 				C8550B4A1D95A41400A6FCFE /* Reactive.swift */,
 				C8093CAF1B8A72BE0088E94D /* Rx.swift */,
 				C8093CB01B8A72BE0088E94D /* RxMutableBox.swift */,
@@ -1589,9 +1589,9 @@
 				C8BF34C81C2E426800416CAE /* Platform */,
 				C8093C4A1B8A72BE0088E94D /* Concurrency */,
 				C8093C531B8A72BE0088E94D /* Disposables */,
+				C8093CB41B8A72BE0088E94D /* Schedulers */,
 				C8093C691B8A72BE0088E94D /* Observables */,
 				C8093CA11B8A72BE0088E94D /* Observers */,
-				C8093CB41B8A72BE0088E94D /* Schedulers */,
 				C8093CBD1B8A72BE0088E94D /* Subjects */,
 				C85106851C2D54B70075150C /* Extensions */,
 				601AE3D81EE24E3800617386 /* SwiftSupport */,
@@ -1639,6 +1639,8 @@
 		C8093C691B8A72BE0088E94D /* Observables */ = {
 			isa = PBXGroup;
 			children = (
+				C820A8271EB4DA5900D431BC /* Producer.swift */,
+				C820A8281EB4DA5900D431BC /* Sink.swift */,
 				C820A8231EB4DA5900D431BC /* AddRef.swift */,
 				C820A8061EB4DA5900D431BC /* Amb.swift */,
 				C820A8211EB4DA5900D431BC /* AsMaybe.swift */,
@@ -1677,7 +1679,6 @@
 				C820A8161EB4DA5900D431BC /* Never.swift */,
 				C820A81A1EB4DA5900D431BC /* ObserveOn.swift */,
 				C820A80E1EB4DA5900D431BC /* Optional.swift */,
-				C820A8271EB4DA5900D431BC /* Producer.swift */,
 				C820A8101EB4DA5900D431BC /* Range.swift */,
 				C820A81F1EB4DA5900D431BC /* Reduce.swift */,
 				C820A8121EB4DA5900D431BC /* Repeat.swift */,
@@ -1687,7 +1688,6 @@
 				C820A80F1EB4DA5900D431BC /* Sequence.swift */,
 				C8845AD31EDB4C9900B36836 /* ShareReplayScope.swift */,
 				C820A7F51EB4DA5900D431BC /* SingleAsync.swift */,
-				C820A8281EB4DA5900D431BC /* Sink.swift */,
 				C820A7ED1EB4DA5900D431BC /* Skip.swift */,
 				C820A8071EB4DA5900D431BC /* SkipUntil.swift */,
 				C820A7F81EB4DA5900D431BC /* SkipWhile.swift */,
@@ -1729,13 +1729,13 @@
 			children = (
 				C83D73B21C1DBAEE003DC470 /* Internal */,
 				C8093CB51B8A72BE0088E94D /* ConcurrentDispatchQueueScheduler.swift */,
+				C8093CBC1B8A72BE0088E94D /* SerialDispatchQueueScheduler.swift */,
+				C8093CB71B8A72BE0088E94D /* MainScheduler.swift */,
 				C8B144FA1BD2D44500267DCE /* ConcurrentMainScheduler.swift */,
 				C8C3DA0E1B939767004D233E /* CurrentThreadScheduler.swift */,
-				C8093CB71B8A72BE0088E94D /* MainScheduler.swift */,
 				C8093CB81B8A72BE0088E94D /* OperationQueueScheduler.swift */,
 				C8093CB91B8A72BE0088E94D /* RecursiveScheduler.swift */,
 				C8093CBB1B8A72BE0088E94D /* SchedulerServices+Emulation.swift */,
-				C8093CBC1B8A72BE0088E94D /* SerialDispatchQueueScheduler.swift */,
 				C8FA89121C30405400CD3A17 /* VirtualTimeConverterType.swift */,
 				C8FA89131C30405400CD3A17 /* VirtualTimeScheduler.swift */,
 				C8FA89161C30409900CD3A17 /* HistoricalScheduler.swift */,
@@ -2063,11 +2063,11 @@
 		C83D73B21C1DBAEE003DC470 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				C83D73B41C1DBAEE003DC470 /* InvocableScheduledItem.swift */,
-				C83D73B51C1DBAEE003DC470 /* InvocableType.swift */,
-				C83D73B61C1DBAEE003DC470 /* ScheduledItem.swift */,
-				C83D73B71C1DBAEE003DC470 /* ScheduledItemType.swift */,
 				C80EEC331D42D06E00131C39 /* DispatchQueueConfiguration.swift */,
+				C83D73B51C1DBAEE003DC470 /* InvocableType.swift */,
+				C83D73B41C1DBAEE003DC470 /* InvocableScheduledItem.swift */,
+				C83D73B71C1DBAEE003DC470 /* ScheduledItemType.swift */,
+				C83D73B61C1DBAEE003DC470 /* ScheduledItem.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";

@@ -85,6 +85,7 @@ public final class CompositeDisposable : DisposeBase, Cancelable {
         self._lock.lock(); defer { self._lock.unlock() }
 
         let bagKey = self._disposables?.insert(disposable)
+        // 通过 map 转换类型
         return bagKey.map(DisposeKey.init)
     }
     

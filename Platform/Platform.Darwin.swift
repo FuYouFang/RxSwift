@@ -13,6 +13,8 @@
     import protocol Foundation.NSCopying
 
     extension Thread {
+        // 向下面的 dictionary 中存放值
+        // Thread.current.threadDictionary
         static func setThreadLocalStorageValue<T: AnyObject>(_ value: T?, forKey key: NSCopying) {
             let currentThread = Thread.current
             let threadDictionary = currentThread.threadDictionary
@@ -25,6 +27,8 @@
             }
         }
 
+        // 读取 dictionary 中存放值
+        // Thread.current.threadDictionary
         static func getThreadLocalStorageValueForKey<T>(_ key: NSCopying) -> T? {
             let currentThread = Thread.current
             let threadDictionary = currentThread.threadDictionary

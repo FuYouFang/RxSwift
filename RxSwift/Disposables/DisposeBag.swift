@@ -88,6 +88,7 @@ extension DisposeBag {
     /// Convenience init allows a list of disposables to be gathered for disposal.
     public convenience init(disposing disposables: Disposable...) {
         self.init()
+        // 用 + 合并两个数组
         self._disposables += disposables
     }
 
@@ -98,6 +99,7 @@ extension DisposeBag {
     }
 
     /// Convenience function allows a list of disposables to be gathered for disposal.
+    // 不确定参数的个数，转化为对应参数的数组
     public func insert(_ disposables: Disposable...) {
         self.insert(disposables)
     }

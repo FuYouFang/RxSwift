@@ -43,6 +43,7 @@ public protocol ReactiveCompatible {
     typealias CompatibleType = ReactiveBase
 
     /// Reactive extensions.
+    // 返回一种类型
     static var rx: Reactive<ReactiveBase>.Type { get set }
 
     /// Reactive extensions.
@@ -53,6 +54,7 @@ extension ReactiveCompatible {
     /// Reactive extensions.
     public static var rx: Reactive<Self>.Type {
         get {
+            
             return Reactive<Self>.self
         }
         // swiftlint:disable:next unused_setter_value

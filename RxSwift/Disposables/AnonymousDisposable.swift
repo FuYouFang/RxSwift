@@ -9,6 +9,7 @@
 /// Represents an Action-based disposable.
 ///
 /// When dispose method is called, disposal action will be dereferenced.
+/// 将 disposable 的代码块转换成类
 fileprivate final class AnonymousDisposable : DisposeBase, Cancelable {
     public typealias DisposeAction = () -> Void
 

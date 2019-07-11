@@ -79,6 +79,7 @@ public enum VirtualTimeComparison {
     case greaterThan
 }
 
+// 将繁琐的对比方法，封装成了方法
 extension VirtualTimeComparison {
     /// lhs < rhs.
     var lessThen: Bool {

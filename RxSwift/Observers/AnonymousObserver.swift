@@ -6,6 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+// 匿名
 final class AnonymousObserver<Element>: ObserverBase<Element> {
     typealias EventHandler = (Event<Element>) -> Void
     

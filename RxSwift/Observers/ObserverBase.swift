@@ -6,6 +6,9 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
+// 观察者的基类
+// 用来保证在接收到 error，complated 事件，或者调用 dispose 方法之后就不会再处理任何事件了
+// 将 on 转换到 onCore 方法
 class ObserverBase<Element> : Disposable, ObserverType {
     private let _isStopped = AtomicInt(0)
 
