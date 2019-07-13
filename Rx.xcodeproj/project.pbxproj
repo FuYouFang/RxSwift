@@ -1592,8 +1592,8 @@
 				C8093CB41B8A72BE0088E94D /* Schedulers */,
 				C8093C691B8A72BE0088E94D /* Observables */,
 				C8093CA11B8A72BE0088E94D /* Observers */,
-				C8093CBD1B8A72BE0088E94D /* Subjects */,
 				C85106851C2D54B70075150C /* Extensions */,
+				C8093CBD1B8A72BE0088E94D /* Subjects */,
 				601AE3D81EE24E3800617386 /* SwiftSupport */,
 				C81A09851E6C701700900B3B /* Traits */,
 				C8093C661B8A72BE0088E94D /* Info.plist */,
@@ -1747,11 +1747,11 @@
 		C8093CBD1B8A72BE0088E94D /* Subjects */ = {
 			isa = PBXGroup;
 			children = (
+				C8093CC11B8A72BE0088E94D /* SubjectType.swift */,
 				0BA949661E224B7E0036DD06 /* AsyncSubject.swift */,
 				C8093CBE1B8A72BE0088E94D /* BehaviorSubject.swift */,
 				C8093CBF1B8A72BE0088E94D /* PublishSubject.swift */,
 				C8093CC01B8A72BE0088E94D /* ReplaySubject.swift */,
-				C8093CC11B8A72BE0088E94D /* SubjectType.swift */,
 			);
 			path = Subjects;
 			sourceTree = "<group>";

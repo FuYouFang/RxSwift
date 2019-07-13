@@ -9,6 +9,7 @@
 
 // MARK: forEach
 
+// 不同类型调用不同的方法
 @inline(__always)
 func dispatch<Element>(_ bag: Bag<(Event<Element>) -> Void>, _ event: Event<Element>) {
     bag._value0?(event)

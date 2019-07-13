@@ -10,6 +10,7 @@
 /// and only after that source Observable completes.
 ///
 /// (If the source Observable does not emit any values, the AsyncSubject also completes without emitting any values.)
+/// 只发送最后一个元素，（如果没有发送过任何元素就结束了，则 AsyncSubject 也不会发射任何元素）
 public final class AsyncSubject<Element>
     : Observable<Element>
     , SubjectType
@@ -17,6 +18,7 @@ public final class AsyncSubject<Element>
     , SynchronizedUnsubscribeType {
     public typealias SubjectObserverType = AsyncSubject<Element>
 
+    //  Bag<(Event<Element>) -> Void>
     typealias Observers = AnyObserver<Element>.s
     typealias DisposeKey = Observers.KeyType
 
@@ -129,6 +131,7 @@ public final class AsyncSubject<Element>
 
         let key = self._observers.insert(observer.on)
 
+        // 将所有的操作都封装成统一的操作
         return SubscriptionDisposable(owner: self, key: key)
     }
 

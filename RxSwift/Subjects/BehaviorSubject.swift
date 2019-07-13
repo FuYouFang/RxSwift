@@ -86,8 +86,10 @@ public final class BehaviorSubject<Element>
         dispatch(self._synchronized_on(event), event)
     }
 
+    // 记录最后一个时间的元素 和 结束的事件
     func _synchronized_on(_ event: Event<Element>) -> Observers {
         self._lock.lock(); defer { self._lock.unlock() }
+        // 有结束时间 或者 销毁 之后就不再通知了
         if self._stoppedEvent != nil || self._isDisposed {
             return Observers()
         }
@@ -114,16 +116,19 @@ public final class BehaviorSubject<Element>
     }
 
     func _synchronized_subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
+        // 已经别销毁
         if self._isDisposed {
             observer.on(.error(RxError.disposed(object: self)))
             return Disposables.create()
         }
         
+        // 已经结束
         if let stoppedEvent = self._stoppedEvent {
             observer.on(stoppedEvent)
             return Disposables.create()
         }
         
+        // 发送最新的值
         let key = self._observers.insert(observer.on)
         observer.on(.next(self._element))
     
